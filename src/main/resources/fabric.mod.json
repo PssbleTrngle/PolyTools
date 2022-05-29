@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "polytools",
+  "version": "${version}",
+  "name": "Polytools",
+  "description": "Server mod adding useful tools",
+  "authors": ["possible_triangle"],
+  "contact": {
+    "sources": "https://github.com/PssbleTrngle/SkyConduit"
+  },
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.possible_triangle.polytools.datagen.DataGenerators"
+    ],
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "com.possible_triangle.polytools.PolytoolsMod"
+      }
+    ]
+  },
+  "mixins": ["polytools.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17",
+    "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21",
+    "polymer": "*"
+  },
+  "suggests": {}
+}

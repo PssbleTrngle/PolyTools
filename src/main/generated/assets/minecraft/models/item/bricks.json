@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/bricks",
+  "overrides": [
+    {
+      "model": "polytools:block/sandy_bricks",
+      "predicate": {
+        "custom_model_data": 128912
+      }
+    },
+    {
+      "model": "polytools:block/broken_bricks",
+      "predicate": {
+        "custom_model_data": 128913
+      }
+    }
+  ]
+}
