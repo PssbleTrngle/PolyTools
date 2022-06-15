@@ -23,11 +23,11 @@
   },
   "mixins": ["polytools.mixins.json"],
   "depends": {
-    "fabricloader": ">=0.13.3",
+    "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "~1.19",
     "java": ">=17",
-    "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21",
+    "fabric-language-kotlin": ">=1.8.0+kotlin.1.7.0",
     "polymer": "*"
   },
   "suggests": {}
