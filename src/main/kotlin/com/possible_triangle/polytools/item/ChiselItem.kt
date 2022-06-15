@@ -8,7 +8,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 
 class ChiselItem : ModelledPolymerItem(Settings(), Items.STICK, 3) {
@@ -30,7 +30,7 @@ class ChiselItem : ModelledPolymerItem(Settings(), Items.STICK, 3) {
         return if (BLOCKS.contains(state.block)) {
             val entries = BLOCKS[state.block]!!.map {
                 val biome = Biomes.CHISEL_BIOMES[it] ?: throw NullPointerException("PaintEntry biome missing")
-                PaintEntry(it, biome, state.block, TranslatableText("${PolytoolsMod.ID}.block.$name"))
+                PaintEntry(it, biome, state.block, Text.translatable("${PolytoolsMod.ID}.block.$name"))
             }
 
             PaintGui.open(user, entries, context.blockPos)

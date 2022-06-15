@@ -6,7 +6,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.world.biome.BiomeKeys
 
@@ -18,7 +18,7 @@ class BrushItem : ModelledPolymerItem(Settings(), Items.STICK, 3) {
             Blocks.SAND to BiomeKeys.DESERT,
             Blocks.MYCELIUM to BiomeKeys.MUSHROOM_FIELDS,
         ).map {
-            val display = TranslatableText("biome.${it.value.value.namespace}.${it.value.value.path}")
+            val display = Text.translatable("biome.${it.value.value.namespace}.${it.value.value.path}")
             PaintEntry("", it.value, it.key, display)
         }
     }

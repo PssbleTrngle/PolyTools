@@ -1,8 +1,5 @@
 {
   "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft:item/stick"
-  },
   "overrides": [
     {
       "model": "polytools:item/wrench",
@@ -22,5 +19,8 @@
         "custom_model_data": 1289425
       }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "minecraft:item/stick"
+  }
 }

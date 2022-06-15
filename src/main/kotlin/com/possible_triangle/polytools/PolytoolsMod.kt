@@ -3,7 +3,7 @@ package com.possible_triangle.polytools
 import com.possible_triangle.polytools.command.BiomeFillCommand
 import eu.pb4.polymer.api.block.PolymerBlockUtils
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import org.slf4j.LoggerFactory
 
 object PolytoolsMod : ModInitializer {
@@ -16,7 +16,7 @@ object PolytoolsMod : ModInitializer {
         Content.register()
         Biomes.register()
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, _ ->
+        CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
             BiomeFillCommand.register(dispatcher)
         }
     }

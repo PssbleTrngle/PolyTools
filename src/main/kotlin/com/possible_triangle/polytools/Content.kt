@@ -13,7 +13,7 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
@@ -23,7 +23,7 @@ object Content : Registrar() {
 
     val TAB = PolymerItemGroup.create(
         Identifier(ID, ID),
-        TranslatableText("itemGroup.$ID.$ID")
+        Text.translatable("itemGroup.$ID.$ID")
     ) { ItemStack(WRENCH) }
 
     val WRENCH = "wrench".modded().createItem(WrenchItem())

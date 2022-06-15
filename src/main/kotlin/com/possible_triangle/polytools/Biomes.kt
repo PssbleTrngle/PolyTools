@@ -23,7 +23,6 @@ object Biomes : Registrar() {
             .temperature(0.7F)
             .spawnSettings(SpawnSettings.INSTANCE)
             .generationSettings(GenerationSettings.INSTANCE)
-            .category(Biome.Category.MUSHROOM)
             .effects(BiomeEffects.Builder()
                 .fogColor(0)
                 .waterColor(0)
@@ -37,6 +36,7 @@ object Biomes : Registrar() {
     }
 
     fun setBiome(pos: BlockPos, world: World, biome: RegistryKey<Biome>) {
+        /*
         val chunk = world.getChunk(pos.x shr 4, pos.z shr 4)
         val sectionIndex = world.getSectionIndex(pos.y)
         val section = chunk.getSection(sectionIndex)
@@ -49,6 +49,7 @@ object Biomes : Registrar() {
             section.biomeContainer.set(pos.x and 3, pos.y and 3, pos.z and 3, it)
             chunk.setNeedsSaving(true)
         }
+        */
     }
 
 }

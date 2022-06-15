@@ -20,7 +20,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties.AXIS
 import net.minecraft.state.property.Properties.FACING
 import net.minecraft.state.property.Property
-import net.minecraft.text.LiteralText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -59,10 +58,10 @@ class WrenchItem : ModelledPolymerItem(Settings(), Items.STICK, 0) {
     override fun modifyClientTooltip(tooltip: MutableList<Text>, stack: ItemStack, player: ServerPlayerEntity?) {
         val lock = stack.getLock()
         if(lock != null) {
-            tooltip.add(LiteralText("Locked ")
-                .append(LiteralText(lock.key).setStyle(Style.EMPTY.withItalic(true)))
-                .append(LiteralText(" to "))
-                .append(LiteralText(lock.value.asString()).setStyle(Style.EMPTY.withItalic(true)))
+            tooltip.add(Text.literal("Locked ")
+                .append(Text.literal(lock.key).setStyle(Style.EMPTY.withItalic(true)))
+                .append(Text.literal(" to "))
+                .append(Text.literal(lock.value.asString()).setStyle(Style.EMPTY.withItalic(true)))
             )
         }
     }
@@ -120,14 +119,14 @@ class WrenchItem : ModelledPolymerItem(Settings(), Items.STICK, 0) {
             HitResult.Type.MISS -> {
                 if (stack.getLock() != null && user.isSneaking) {
                     stack.removeSubNbt(LOCK_KEY)
-                    user.sendMessage(LiteralText("Cleared Wrench lock"), true)
+                    user.sendMessage(Text.literal("Cleared Wrench lock"), true)
                     TypedActionResult.success(stack)
                 } else {
                     TypedActionResult.pass(stack)
                 }
             }
             else -> {
-                user.sendMessage(LiteralText(hit.type.name), true)
+                user.sendMessage(Text.literal(hit.type.name), true)
                 super.use(world, user, hand)
             }
         }
@@ -160,7 +159,7 @@ class WrenchItem : ModelledPolymerItem(Settings(), Items.STICK, 0) {
 
             lock(property, state, stack)
             sound(SoundEvents.ITEM_CROSSBOW_HIT)
-            player.sendMessage(LiteralText("Locked Wrench to targeted rotation"), true)
+            player.sendMessage(Text.literal("Locked Wrench to targeted rotation"), true)
 
         } else {
             val rotated = if (lock == null) {
