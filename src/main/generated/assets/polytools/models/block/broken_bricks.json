@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "texture": "polytools:block/broken_bricks"
-  }
-}

@@ -6,8 +6,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 class DataGenerators : DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(generator: FabricDataGenerator) {
-        generator.addProvider(ToolModels(generator))
-        generator.addProvider(ChiseledModels(generator))
+        val pack = generator.createPack()
+        pack.addProvider(::ToolModels)
     }
 
 }

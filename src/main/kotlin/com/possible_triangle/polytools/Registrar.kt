@@ -1,10 +1,11 @@
 package com.possible_triangle.polytools
 
-import net.minecraft.block.Block
-import net.minecraft.item.Item
-import net.minecraft.util.Identifier
-import net.minecraft.util.registry.Registry
-import net.minecraft.util.registry.RegistryKey
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 
 abstract class Registrar {
 
@@ -15,19 +16,19 @@ abstract class Registrar {
         return value
     }
 
-    fun <T, R : T> Identifier.create(registry: Registry<T>, value: R): R {
+    fun <T, R : T> ResourceLocation.create(registry: Registry<T>, value: R): R {
         entries.add { Registry.register(registry, this, value) }
         return value
     }
 
-    fun <T, R : T> RegistryKey<T>.create(registry: Registry<T>, value: R): R {
+    fun <T : Any, R : T> ResourceKey<T>.create(registry: Registry<T>, value: R): R {
         entries.add { Registry.register(registry, this, value) }
         return value
     }
 
-    infix fun <T : Block> String.createBlock(block: T): T = create(Registry.BLOCK, block)
+    infix fun <T : Block> String.createBlock(block: T): T = create(BuiltInRegistries.BLOCK, block)
 
-    infix fun <T : Item> String.createItem(item: T): T = create(Registry.ITEM, item)
+    infix fun <T : Item> String.createItem(item: T): T = create(BuiltInRegistries.ITEM, item)
 
     fun register() {
         entries.forEach { it() }

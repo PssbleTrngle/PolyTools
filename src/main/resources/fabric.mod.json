@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "polytools",
-  "version": "${version}",
-  "name": "Polytools",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
   "description": "Server mod adding useful tools",
-  "authors": ["possible_triangle"],
+  "authors": ["${mod_author}"],
   "contact": {
-    "sources": "https://github.com/PssbleTrngle/SkyConduit"
+    "sources": "https://github.com/${repository}",
+    "issues": "https://github.com/${repository}/issues"
   },
   "license": "CC0-1.0",
   "environment": "*",
@@ -21,14 +22,13 @@
       }
     ]
   },
-  "mixins": ["polytools.mixins.json"],
   "depends": {
-    "fabricloader": ">=0.14.6",
+    "fabricloader": ">=0.15.7",
     "fabric": "*",
-    "minecraft": "~1.19",
+    "minecraft": "~1.20",
     "java": ">=17",
-    "fabric-language-kotlin": ">=1.8.0+kotlin.1.7.0",
-    "polymer": "*"
+    "fabric-language-kotlin": "1.9.6+kotlin.1.8.22",
+    "polymer-core": "*"
   },
   "suggests": {}
 }

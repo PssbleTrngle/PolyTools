@@ -4,46 +4,46 @@ import com.google.common.collect.ImmutableMap
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import net.minecraft.data.client.Model
-import net.minecraft.data.client.TextureKey
-import net.minecraft.data.client.TextureMap
-import net.minecraft.util.Identifier
+import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot
+import net.minecraft.resources.ResourceLocation
 import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
 
-private data class CustomModelData(val id: Identifier, val data: Int, val model: Model, val key: TextureKey) {
+private data class CustomModelData(val id: ResourceLocation, val data: Int, val model: ModelTemplate, val key: TextureSlot) {
     val type: String
-        get() = if (key == TextureKey.LAYER0) "item" else "block"
+        get() = if (key ==TextureSlot.LAYER0) "item" else "block"
 
-    val modelId: Identifier
-        get() = Identifier(id.namespace, "${type}/${id.path}")
+    val modelId: ResourceLocation
+        get() = ResourceLocation(id.namespace, "${type}/${id.path}")
 }
 
-class CustomModel(private val parent: Identifier?, private vararg val requiredTextures: TextureKey) :
-    Model(Optional.ofNullable(parent), Optional.empty(), *requiredTextures) {
+class CustomModel(private val parent: ResourceLocation?, private vararg val requiredTextures: TextureSlot) :
+    ModelTemplate(Optional.ofNullable(parent), Optional.empty(), *requiredTextures) {
 
     private val customModels = arrayListOf<CustomModelData>()
 
-    fun add(id: Identifier, data: Int, model: Model, key: TextureKey) {
+    fun add(id: ResourceLocation, data: Int, model: ModelTemplate, key: TextureSlot) {
         customModels.add(CustomModelData(id, data, model, key))
     }
 
-    override fun upload(
-        id: Identifier,
-        textureMap: TextureMap,
-        modelCollector: BiConsumer<Identifier, Supplier<JsonElement>>,
-    ): Identifier {
-        val stream = requiredTextures.toList() + textureMap.inherited.toList()
+    override fun create(
+        id: ResourceLocation,
+        textureMap: TextureMapping,
+        modelCollector: BiConsumer<ResourceLocation, Supplier<JsonElement>>,
+    ): ResourceLocation {
+        val stream = requiredTextures.toList() + textureMap.forced.toList()
 
-        val map = stream.stream().collect(ImmutableMap.toImmutableMap(Function.identity()) { key: TextureKey ->
-            textureMap.getTexture(key)
+        val map = stream.stream().collect(ImmutableMap.toImmutableMap(Function.identity()) { key: TextureSlot ->
+            textureMap.get(key)
         })
 
         customModels.forEach {
-            val textureMap = TextureMap().put(it.key, it.modelId)
-            it.model.upload(it.modelId, textureMap, modelCollector)
+            val textureMap = TextureMapping().put(it.key, it.modelId)
+            it.model.create(it.modelId, textureMap, modelCollector)
         }
 
         modelCollector.accept(id, Supplier {
@@ -52,7 +52,7 @@ class CustomModel(private val parent: Identifier?, private vararg val requiredTe
             if (map.isNotEmpty()) {
                 jsonObject.add("textures", JsonObject().also {
                     map.forEach { (textureKey, textureId) ->
-                        it.addProperty(textureKey.name, textureId.toString())
+                        it.addProperty(textureKey.id, textureId.toString())
                     }
                     jsonObject.add("textures", it)
                 })

@@ -12,12 +12,6 @@
       "predicate": {
         "custom_model_data": 1289423
       }
-    },
-    {
-      "model": "polytools:item/chisel",
-      "predicate": {
-        "custom_model_data": 1289425
-      }
     }
   ],
   "textures": {

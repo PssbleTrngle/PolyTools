@@ -1,9 +1,7 @@
 package com.possible_triangle.polytools
 
-import com.possible_triangle.polytools.command.BiomeFillCommand
-import eu.pb4.polymer.api.block.PolymerBlockUtils
+import eu.pb4.polymer.core.api.block.PolymerBlockUtils
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import org.slf4j.LoggerFactory
 
 object PolytoolsMod : ModInitializer {
@@ -14,10 +12,5 @@ object PolytoolsMod : ModInitializer {
     override fun onInitialize() {
         PolymerBlockUtils.registerBlockEntity(Content.DEMAGNETIZER_TILE)
         Content.register()
-        Biomes.register()
-
-        CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
-            BiomeFillCommand.register(dispatcher)
-        }
     }
 }

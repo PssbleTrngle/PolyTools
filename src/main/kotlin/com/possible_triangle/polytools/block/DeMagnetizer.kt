@@ -2,20 +2,20 @@ package com.possible_triangle.polytools.block
 
 import com.possible_triangle.polytools.Content
 import com.possible_triangle.polytools.block.tile.DeMagnetizerTile
-import eu.pb4.polymer.api.block.PolymerBlock
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.BlockWithEntity
-import net.minecraft.block.Blocks
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.BlockEntityTicker
-import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import eu.pb4.polymer.core.api.block.PolymerBlock
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.BaseEntityBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 
-class DeMagnetizer : BlockWithEntity(Settings.copy(Blocks.LODESTONE)), PolymerBlock {
+class DeMagnetizer : BaseEntityBlock(Properties.copy(Blocks.LODESTONE)), PolymerBlock {
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return DeMagnetizerTile(pos, state)
     }
 
@@ -24,12 +24,12 @@ class DeMagnetizer : BlockWithEntity(Settings.copy(Blocks.LODESTONE)), PolymerBl
     }
 
     override fun <T : BlockEntity> getTicker(
-        world: World,
+        level: Level,
         state: BlockState,
         type: BlockEntityType<T>,
     ): BlockEntityTicker<T>? {
         if (type != Content.DEMAGNETIZER_TILE) return null
-        if (world.isClient) return null
+        if (level.isClientSide) return null
         return BlockEntityTicker(DeMagnetizerTile::serverTick) as BlockEntityTicker<T>
     }
 

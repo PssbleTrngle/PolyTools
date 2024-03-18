@@ -1,19 +1,18 @@
 package com.possible_triangle.polytools.item
 
-import com.possible_triangle.polytools.Content
-import eu.pb4.polymer.api.item.SimplePolymerItem
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.server.network.ServerPlayerEntity
+import eu.pb4.polymer.core.api.item.SimplePolymerItem
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 
-open class ModelledPolymerItem(settings: Settings, item: Item, private val id: Int) :
-    SimplePolymerItem(settings.group(Content.TAB), item) {
+open class ModelledPolymerItem(properties: Properties, item: Item, private val id: Int) :
+    SimplePolymerItem(properties, item) {
 
     companion object {
         private const val BASE_ID = 1289422
     }
 
-    override fun getPolymerCustomModelData(stack: ItemStack, player: ServerPlayerEntity?): Int {
+    override fun getPolymerCustomModelData(stack: ItemStack, player: ServerPlayer?): Int {
         return BASE_ID + id
     }
 
