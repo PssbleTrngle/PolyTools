@@ -24,6 +24,7 @@ repositories {
 
 fabric {
     dataGen()
+    enableMixins()
 
     includesMod("eu.pb4:sgui:${sgui_version}")
     includesMod("eu.pb4:polymer-core:${polymer_version}")

@@ -17,7 +17,7 @@ class ToolModels(private val output: FabricDataOutput) : FabricModelProvider(out
     override fun generateBlockStateModels(generator: BlockModelGenerators) {}
 
     override fun generateItemModels(generator: ItemModelGenerators) {
-        val customModels = listOf(Content.MAGNET, Content.WRENCH).groupBy {
+        val customModels = listOf(Content.MAGNET, Content.WRENCH, Content.SPAWN_PORTER).groupBy {
             val stack = ItemStack(it)
             it.getPolymerItem(stack, null)
         }

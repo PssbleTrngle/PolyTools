@@ -1,9 +1,11 @@
 package com.possible_triangle.polytools
 
 import com.possible_triangle.polytools.PolytoolsMod.ID
+import com.possible_triangle.polytools.block.CutVinesBlock
 import com.possible_triangle.polytools.block.DeMagnetizer
 import com.possible_triangle.polytools.block.tile.DeMagnetizerTile
 import com.possible_triangle.polytools.item.MagnetItem
+import com.possible_triangle.polytools.item.SpawnPorter
 import com.possible_triangle.polytools.item.WrenchItem
 import eu.pb4.polymer.core.api.item.PolymerBlockItem
 import net.minecraft.core.registries.BuiltInRegistries
@@ -17,10 +19,13 @@ object Content : Registrar() {
 
     val WRENCH = "wrench".modded().createItem(WrenchItem())
     val MAGNET = "magnet".modded().createItem(MagnetItem())
+    val SPAWN_PORTER = "spawn_porter".modded().createItem(SpawnPorter())
 
     val DEMAGNETIZER = "demagnetizer".modded() createBlock DeMagnetizer()
     val DEMAGNETIZER_ITEM =
         "demagnetizer".modded() createItem PolymerBlockItem(DEMAGNETIZER, Item.Properties(), Items.LODESTONE)
+
+    val CUT_VINES = "cut_vines".modded() createBlock CutVinesBlock()
 
     val DEMAGNETIZER_TILE = "demagnetizer".modded()
         .create(

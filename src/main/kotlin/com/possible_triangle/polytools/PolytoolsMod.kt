@@ -12,5 +12,6 @@ object PolytoolsMod : ModInitializer {
     override fun onInitialize() {
         PolymerBlockUtils.registerBlockEntity(Content.DEMAGNETIZER_TILE)
         Content.register()
+        Events.register()
     }
 }
