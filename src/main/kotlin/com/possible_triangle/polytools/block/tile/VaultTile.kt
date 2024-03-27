@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
+import net.minecraft.nbt.NbtUtils
 import net.minecraft.nbt.StringTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TILE, pos, state) {
@@ -23,6 +25,8 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
 
     private var keyItem: Item? = null
     private var requiredLore = emptyList<String>()
+
+    private var rewardedPlayers = mutableListOf<UUID>()
 
     private val ejector = LootEjectorBehaviour {
         sound(Content.VAULT_EJECT_SOUND)
@@ -40,7 +44,9 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
         if (!stack.`is`(keyItem)) return false
 
         if (requiredLore.isNotEmpty()) {
-            val lore = stack.tag?.getCompound(ItemStack.TAG_DISPLAY)?.getList(ItemStack.TAG_LORE, 8)?.map { it.asString } ?: return false
+            val lore =
+                stack.tag?.getCompound(ItemStack.TAG_DISPLAY)?.getList(ItemStack.TAG_LORE, 8)?.map { it.asString }
+                    ?: return false
             return requiredLore.all { lore.contains(it) }
         }
 
@@ -51,11 +57,15 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
         if (lootTable == null) return InteractionResult.PASS
         val level = getLevel()
 
+        if (rewardedPlayers.contains(player.uuid)) return InteractionResult.FAIL
+
         return if (test(stack)) {
             sound(Content.VAULT_INSERT_KEY_SOUND)
             if (!player.abilities.instabuild) stack.shrink(1)
 
             if (level is ServerLevel) ejector.generate(lootTable!!, level, blockPos, player)
+
+            rewardedPlayers.add(player.uuid)
 
             InteractionResult.CONSUME
         } else {
@@ -79,6 +89,10 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
             val components = keyItemTag.getCompound("components")
             requiredLore = components.getList("minecraft:lore", 8).map { it.asString }
         }
+
+        rewardedPlayers = nbt.getList("rewarded_players", 11).map {
+            NbtUtils.loadUUID(it)
+        }.toMutableList()
     }
 
     override fun saveAdditional(nbt: CompoundTag) {
@@ -97,6 +111,10 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
                     })
                 }
             })
+        })
+
+        nbt.put("rewarded_players", rewardedPlayers.mapTo(ListTag()) {
+            NbtUtils.createUUID(it)
         })
     }
 

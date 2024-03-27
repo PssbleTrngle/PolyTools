@@ -1,5 +1,7 @@
 package com.possible_triangle.polytools
 
+import eu.pb4.polymer.core.api.block.PolymerBlockUtils
+import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
@@ -37,9 +39,11 @@ abstract class Registrar {
     fun <T : BlockEntity> String.createTile(supplier: BlockEntitySupplier<out T> , vararg blocks: Block): BlockEntityType<T> = create(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
         BlockEntityType.Builder.of(supplier, *blocks).build(null)
-    )
+    ).also {
+        PolymerBlockUtils.registerBlockEntity(it)
+    }
 
-    fun String.createSound() = create(BuiltInRegistries.SOUND_EVENT, SoundEvent.createVariableRangeEvent(ResourceLocation(this)))
+    fun String.createSound() = Holder.direct(SoundEvent.createVariableRangeEvent(ResourceLocation(this)))
 
     fun register() {
         entries.forEach { it() }
