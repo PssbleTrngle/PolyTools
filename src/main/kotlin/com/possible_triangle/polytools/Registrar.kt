@@ -4,8 +4,12 @@ import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier
 
 abstract class Registrar {
 
@@ -29,6 +33,13 @@ abstract class Registrar {
     infix fun <T : Block> String.createBlock(block: T): T = create(BuiltInRegistries.BLOCK, block)
 
     infix fun <T : Item> String.createItem(item: T): T = create(BuiltInRegistries.ITEM, item)
+
+    fun <T : BlockEntity> String.createTile(supplier: BlockEntitySupplier<out T> , vararg blocks: Block): BlockEntityType<T> = create(
+        BuiltInRegistries.BLOCK_ENTITY_TYPE,
+        BlockEntityType.Builder.of(supplier, *blocks).build(null)
+    )
+
+    fun String.createSound() = create(BuiltInRegistries.SOUND_EVENT, SoundEvent.createVariableRangeEvent(ResourceLocation(this)))
 
     fun register() {
         entries.forEach { it() }

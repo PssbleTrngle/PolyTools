@@ -1,0 +1,16 @@
+{
+  "subtitles.block.vault.activate": "Vault ignites",
+  "subtitles.block.vault.ambient": "Vault crackles",
+  "subtitles.block.vault.close_shutter": "Vault closes",
+  "subtitles.block.vault.deactivate": "Vault extinguishes",
+  "subtitles.block.vault.eject_item": "Vault ejects item",
+  "subtitles.block.vault.insert_item": "Vault unlocks",
+  "subtitles.block.vault.insert_item_fail": "Vault fails unlocking",
+  "subtitles.block.vault.open_shutter": "Vault opens",
+  "subtitles.block.trial_spawner.ambient": "Trial Spawner crackles",
+  "subtitles.block.trial_spawner.close_shutter": "Trial Spawner closes",
+  "subtitles.block.trial_spawner.detect_player": "Trial Spawner charges up",
+  "subtitles.block.trial_spawner.eject_item": "Trial Spawner ejects items",
+  "subtitles.block.trial_spawner.open_shutter": "Trial Spawner opens",
+  "subtitles.block.trial_spawner.spawn_mob": "Trial Spawner spawns a mob"
+}

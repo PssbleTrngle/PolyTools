@@ -12,6 +12,12 @@
       "predicate": {
         "custom_model_data": 1289423
       }
+    },
+    {
+      "model": "minecraft:item/trial_key",
+      "predicate": {
+        "custom_model_data": 1289433
+      }
     }
   ],
   "textures": {
