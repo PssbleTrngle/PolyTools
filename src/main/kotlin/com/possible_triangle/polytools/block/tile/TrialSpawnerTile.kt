@@ -78,7 +78,7 @@ class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.T
             val total = totalMobs + totalMobsPerPlayer * registeredPlayers.size
             val count = simultaneousMobs + simultaneousMobsPerPlayer * registeredPlayers.size
 
-            if (mobsSpawned >= total) {
+            if (total in 1..mobsSpawned) {
                 val living = currentMobs
                     .mapNotNull { level.getEntity(it) }
                     .filter { it.isAlive }
