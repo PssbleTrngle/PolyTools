@@ -53,11 +53,15 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
         return true
     }
 
+    fun hasUnlocked(player: Player): Boolean {
+       return rewardedPlayers.contains(player.uuid)
+    }
+
     fun unlock(player: Player, stack: ItemStack): InteractionResult {
         if (lootTable == null) return InteractionResult.PASS
         val level = getLevel()
 
-        if (rewardedPlayers.contains(player.uuid)) return InteractionResult.FAIL
+        if (hasUnlocked(player)) return InteractionResult.FAIL
 
         return if (test(stack)) {
             sound(Content.VAULT_INSERT_KEY_SOUND)

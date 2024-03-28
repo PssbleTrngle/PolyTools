@@ -2,9 +2,11 @@
   "item.polytools.magnet": "Magnet",
   "item.polytools.wrench": "Wrench",
   "item.polytools.spawn_porter": "Recall Clock",
+  "item.polytools.sky_core": "Piece of the Sky",
   "item.minecraft.trial_key": "Trial Key",
+  "block.polytools.demagnetizer": "De-Magnetizer",
+  "block.polytools.sky_conduit": "Chime",
   "block.minecraft.trial_spawner": "Trial Spawner",
   "block.minecraft.vault": "Vault",
-  "block.polytools.demagnetizer": "De-Magnetizer",
   "itemGroup.polytools.polytools": "Poly-Tools"
 }

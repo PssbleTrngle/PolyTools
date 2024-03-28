@@ -1,18 +1,21 @@
 package com.possible_triangle.polytools
 
 import com.possible_triangle.polytools.PolytoolsMod.ID
-import com.possible_triangle.polytools.block.CutVinesBlock
-import com.possible_triangle.polytools.block.DeMagnetizer
-import com.possible_triangle.polytools.block.TrialSpawner
-import com.possible_triangle.polytools.block.Vault
+import com.possible_triangle.polytools.block.*
 import com.possible_triangle.polytools.block.tile.DeMagnetizerTile
+import com.possible_triangle.polytools.block.tile.SkyConduitTile
 import com.possible_triangle.polytools.block.tile.TrialSpawnerTile
 import com.possible_triangle.polytools.block.tile.VaultTile
+import com.possible_triangle.polytools.effect.SkyConduitPower
 import com.possible_triangle.polytools.item.MagnetItem
 import com.possible_triangle.polytools.item.ModelledPolymerItem
 import com.possible_triangle.polytools.item.SpawnPorter
 import com.possible_triangle.polytools.item.WrenchItem
 import eu.pb4.polymer.core.api.item.PolymerBlockItem
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
@@ -49,5 +52,12 @@ object Content : Registrar() {
     val VAULT_EJECT_SOUND = "block.vault.eject_item".createSound()
     val VAULT_INSERT_KEY_SOUND = "block.vault.insert_item".createSound()
     val VAULT_INSERT_KEY_FAIL_SOUND = "block.vault.insert_item_fail".createSound()
+
+    val SKY_CORE = "sky_core".createItem(ModelledPolymerItem(Item.Properties().rarity(Rarity.RARE), Items.HEART_OF_THE_SEA, 1))
+
+    val SKY_CONDUIT = "sky_conduit".createBlock(SkyConduit())
+    val SKY_CONDUIT_TILE = "sky_conduit".createTile(::SkyConduitTile, SKY_CONDUIT)
+    val SKY_CONDUIT_BASE_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation("sky_conduit_base_blocks".modded()))
+    val SKY_CONDUIT_POWER  = "sky_conduit_power".modded().create(BuiltInRegistries.MOB_EFFECT, SkyConduitPower())
 
 }

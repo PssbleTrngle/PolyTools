@@ -17,7 +17,9 @@ class ToolModels(private val output: FabricDataOutput) : FabricModelProvider(out
     override fun generateBlockStateModels(generator: BlockModelGenerators) {}
 
     override fun generateItemModels(generator: ItemModelGenerators) {
-        val customModels = listOf(Content.MAGNET, Content.WRENCH, Content.SPAWN_PORTER, Content.TRIAL_KEY).groupBy {
+        val modeledItems = listOf(Content.MAGNET, Content.WRENCH, Content.SPAWN_PORTER, Content.TRIAL_KEY, Content.SKY_CORE)
+
+        val customModels = modeledItems.groupBy {
             val stack = ItemStack(it)
             it.getPolymerItem(stack, null)
         }
@@ -29,7 +31,12 @@ class ToolModels(private val output: FabricDataOutput) : FabricModelProvider(out
             imposters.forEach {
                 val id = BuiltInRegistries.ITEM.getKey(it)
                 val data = it.getPolymerCustomModelData(ItemStack(it), null)
-                model.add(id, data, ModelTemplate(Optional.of(parent), Optional.empty(), TextureSlot.LAYER0), TextureSlot.LAYER0)
+                model.add(
+                    id,
+                    data,
+                    ModelTemplate(Optional.of(parent), Optional.empty(), TextureSlot.LAYER0),
+                    TextureSlot.LAYER0
+                )
             }
 
             generator.generateFlatItem(fake, model)
