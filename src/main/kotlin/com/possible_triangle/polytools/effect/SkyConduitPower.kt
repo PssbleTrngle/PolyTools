@@ -17,16 +17,15 @@ class SkyConduitPower : MobEffect(MobEffectCategory.BENEFICIAL, 0xf7f08d), Polym
 
     override fun addAttributeModifiers(entity: LivingEntity, attributes: AttributeMap, amplifier: Int) {
         super.addAttributeModifiers(entity, attributes, amplifier)
-        if (entity is ServerPlayer && !entity.abilities.flying) {
-            entity.abilities.flying = true
+        if (entity is ServerPlayer && !entity.abilities.mayfly) {
+            entity.abilities.mayfly = true
             entity.onUpdateAbilities()
-
         }
     }
 
     override fun removeAttributeModifiers(entity: LivingEntity, attributes: AttributeMap, amplifier: Int) {
         super.removeAttributeModifiers(entity, attributes, amplifier)
-        if (entity is ServerPlayer && entity.abilities.flying && !entity.hasEffect(Content.SKY_CONDUIT_POWER)) {
+        if (entity is ServerPlayer && entity.abilities.mayfly && !entity.hasEffect(Content.SKY_CONDUIT_POWER)) {
             entity.gameMode.gameModeForPlayer.updatePlayerAbilities(entity.abilities)
             entity.onUpdateAbilities()
         }

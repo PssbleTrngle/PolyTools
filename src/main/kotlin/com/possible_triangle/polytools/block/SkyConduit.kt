@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class SkyConduit : ConduitBlock(Properties.copy(Blocks.CONDUIT)), PolymerHeadBlock, TickingBlock<SkyConduitTile> {
 
-    override val blockEntityType = Content.SKY_CONDUIT_TILE
+    override val blockEntityType get() = Content.SKY_CONDUIT_TILE
 
     override fun getPolymerBlock(state: BlockState): Block = polymerBlock
 
@@ -31,7 +31,7 @@ class SkyConduit : ConduitBlock(Properties.copy(Blocks.CONDUIT)), PolymerHeadBlo
     override fun <T : BlockEntity> getTicker(
         level: Level,
         state: BlockState,
-        type: BlockEntityType<T>
+        type: BlockEntityType<T>,
     ): BlockEntityTicker<T>? {
         return super<TickingBlock>.getTicker(level, state, type)
     }

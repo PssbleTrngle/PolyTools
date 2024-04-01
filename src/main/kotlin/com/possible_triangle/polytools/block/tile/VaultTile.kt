@@ -61,9 +61,7 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
         if (lootTable == null) return InteractionResult.PASS
         val level = getLevel()
 
-        if (hasUnlocked(player)) return InteractionResult.FAIL
-
-        return if (test(stack)) {
+        return if (!hasUnlocked(player) && test(stack)) {
             sound(Content.VAULT_INSERT_KEY_SOUND)
             if (!player.abilities.instabuild) stack.shrink(1)
 

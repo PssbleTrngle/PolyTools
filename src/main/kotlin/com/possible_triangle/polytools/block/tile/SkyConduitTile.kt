@@ -22,7 +22,6 @@ class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Content.SKY
         private const val DEFAULT_RANGE_FACTOR = 1.0
     }
 
-    private var ticks: Int = 0
     private val blocks = mutableListOf<BlockPos>()
     private var active = false
 
@@ -32,8 +31,6 @@ class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Content.SKY
         get() = customRangeFactor ?: DEFAULT_RANGE_FACTOR
 
     override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState) {
-        ++ticks
-
         if (level.gameTime % 40L == 0L) {
             val staysActive = searchBlocks(level, pos)
             if (staysActive != active) {

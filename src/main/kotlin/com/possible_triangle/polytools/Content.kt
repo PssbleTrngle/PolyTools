@@ -53,10 +53,11 @@ object Content : Registrar() {
     val VAULT_INSERT_KEY_SOUND = "block.vault.insert_item".createSound()
     val VAULT_INSERT_KEY_FAIL_SOUND = "block.vault.insert_item_fail".createSound()
 
-    val SKY_CORE = "sky_core".createItem(ModelledPolymerItem(Item.Properties().rarity(Rarity.RARE), Items.HEART_OF_THE_SEA, 1))
+    val SKY_CORE = "sky_core".modded() createItem ModelledPolymerItem(Item.Properties().rarity(Rarity.UNCOMMON), Items.HEART_OF_THE_SEA, 1)
 
-    val SKY_CONDUIT = "sky_conduit".createBlock(SkyConduit())
-    val SKY_CONDUIT_TILE = "sky_conduit".createTile(::SkyConduitTile, SKY_CONDUIT)
+    val SKY_CONDUIT = "sky_conduit".modded() createBlock SkyConduit()
+    val SKY_CONDUIT_ITEM = "sky_conduit".modded()  createItem PolymerBlockItem(SKY_CONDUIT, Item.Properties().rarity(Rarity.RARE), Items.CONDUIT)
+    val SKY_CONDUIT_TILE = "sky_conduit".modded().createTile(::SkyConduitTile, SKY_CONDUIT)
     val SKY_CONDUIT_BASE_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation("sky_conduit_base_blocks".modded()))
     val SKY_CONDUIT_POWER  = "sky_conduit_power".modded().create(BuiltInRegistries.MOB_EFFECT, SkyConduitPower())
 
