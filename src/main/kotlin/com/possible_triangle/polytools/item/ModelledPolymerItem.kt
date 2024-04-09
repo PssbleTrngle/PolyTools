@@ -9,7 +9,7 @@ open class ModelledPolymerItem(properties: Properties, item: Item, private val i
     SimplePolymerItem(properties, item) {
 
     companion object {
-        private const val BASE_ID = 1289422
+        const val BASE_ID = 1289422
     }
 
     override fun getPolymerCustomModelData(stack: ItemStack, player: ServerPlayer?): Int {

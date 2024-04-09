@@ -1,6 +1,6 @@
 package com.possible_triangle.polytools.block.tile
 
-import com.possible_triangle.polytools.Content
+import com.possible_triangle.polytools.modules.Multiblocks
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB
 import kotlin.math.absoluteValue
 
 
-class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Content.SKY_CONDUIT_TILE, pos, state) {
+class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Multiblocks.SKY_CONDUIT_TILE, pos, state) {
 
     companion object {
         private const val DEFAULT_RANGE_FACTOR = 1.0
@@ -56,7 +56,7 @@ class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Content.SKY
             if (x.absoluteValue < 2 && y.absoluteValue < 2 && z.absoluteValue < 2) continue
             val pos = origin.offset(x, y, z)
             val state = level.getBlockState(pos)
-            if (state.`is`(Content.SKY_CONDUIT_BASE_BLOCKS)) blocks.add(pos)
+            if (state.`is`(Multiblocks.SKY_CONDUIT_BASE_BLOCKS)) blocks.add(pos)
         }
 
         return blocks.size >= 16
@@ -75,7 +75,7 @@ class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Content.SKY
         val enemies = level.getEntitiesOfClass(LivingEntity::class.java, box) { it is Monster && predicate(it) }
 
         players.filter(predicate).forEach {
-            val effect = MobEffectInstance(Content.SKY_CONDUIT_POWER, 100, 0, true, true)
+            val effect = MobEffectInstance(Multiblocks.SKY_CONDUIT_POWER, 100, 0, true, true)
             it.addEffect(effect)
         }
 

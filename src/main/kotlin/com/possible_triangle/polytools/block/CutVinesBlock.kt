@@ -1,7 +1,6 @@
 package com.possible_triangle.polytools.block
 
-import com.possible_triangle.polytools.Content
-import com.possible_triangle.polytools.Content.CUT_VINES
+import com.possible_triangle.polytools.modules.Tools.CUT_VINES
 import eu.pb4.polymer.core.api.block.PolymerBlock
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos

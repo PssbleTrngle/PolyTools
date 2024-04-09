@@ -1,7 +1,7 @@
 package com.possible_triangle.polytools.block
 
-import com.possible_triangle.polytools.Content
 import com.possible_triangle.polytools.block.tile.TrialSpawnerTile
+import com.possible_triangle.polytools.modules.Backport
 import eu.pb4.polymer.core.api.block.PolymerBlock
 import eu.pb4.polymer.core.api.block.PolymerBlockUtils
 import net.minecraft.core.BlockPos
@@ -60,7 +60,7 @@ class TrialSpawner : BaseEntityBlock(Properties.copy(Blocks.BEDROCK)), PolymerBl
         state: BlockState,
         type: BlockEntityType<T>,
     ): BlockEntityTicker<T>? {
-        if (type != Content.TRIAL_SPAWNER_TILE) return null
+        if (type != Backport.TRIAL_SPAWNER_TILE) return null
         if (level.isClientSide) return null
         return BlockEntityTicker(TrialSpawnerTile::serverTick) as BlockEntityTicker<T>
     }

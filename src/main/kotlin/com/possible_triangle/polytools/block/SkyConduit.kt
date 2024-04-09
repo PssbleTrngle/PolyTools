@@ -1,6 +1,6 @@
 package com.possible_triangle.polytools.block
 
-import com.possible_triangle.polytools.Content
+import com.possible_triangle.polytools.modules.Multiblocks
 import com.possible_triangle.polytools.block.tile.SkyConduitTile
 import eu.pb4.polymer.core.api.block.PolymerHeadBlock
 import net.minecraft.core.BlockPos
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class SkyConduit : ConduitBlock(Properties.copy(Blocks.CONDUIT)), PolymerHeadBlock, TickingBlock<SkyConduitTile> {
 
-    override val blockEntityType get() = Content.SKY_CONDUIT_TILE
+    override val blockEntityType get() = Multiblocks.SKY_CONDUIT_TILE
 
     override fun getPolymerBlock(state: BlockState): Block = polymerBlock
 

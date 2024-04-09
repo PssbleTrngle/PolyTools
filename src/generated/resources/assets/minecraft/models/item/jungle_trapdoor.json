@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/template_trapdoor_bottom",
+  "overrides": [
+    {
+      "model": "minecraft:item/oxidized_copper_trapdoor",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    }
+  ],
+  "textures": {
+    "texture": "minecraft:block/jungle_trapdoor"
+  }
+}

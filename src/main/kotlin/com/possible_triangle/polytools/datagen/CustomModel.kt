@@ -14,11 +14,8 @@ import java.util.function.Function
 import java.util.function.Supplier
 
 private data class CustomModelData(val id: ResourceLocation, val data: Int, val model: ModelTemplate, val key: TextureSlot) {
-    val type: String
-        get() = if (key ==TextureSlot.LAYER0) "item" else "block"
-
-    val modelId: ResourceLocation
-        get() = ResourceLocation(id.namespace, "${type}/${id.path}")
+    val modelId = id.withPrefix("item/")
+    val textureId = if(key == TextureSlot.LAYER0) modelId else id.withPrefix("block/")
 }
 
 class CustomModel(private val parent: ResourceLocation?, private vararg val requiredTextures: TextureSlot) :
@@ -42,7 +39,7 @@ class CustomModel(private val parent: ResourceLocation?, private vararg val requ
         })
 
         customModels.forEach {
-            val textureMap = TextureMapping().put(it.key, it.modelId)
+            val textureMap = TextureMapping().put(it.key, it.textureId)
             it.model.create(it.modelId, textureMap, modelCollector)
         }
 

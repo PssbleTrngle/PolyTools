@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/exposed_cut_copper_slab",
+  "overrides": [
+    {
+      "model": "minecraft:item/tuff_brick_slab",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    }
+  ]
+}

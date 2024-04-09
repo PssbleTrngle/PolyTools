@@ -1,6 +1,6 @@
 package com.possible_triangle.polytools.block.tile
 
-import com.possible_triangle.polytools.Content
+import com.possible_triangle.polytools.modules.Backport
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TILE, pos, state) {
+class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Backport.VAULT_TILE, pos, state) {
 
     private var lootTable: ResourceLocation? = null
 
@@ -29,7 +29,7 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
     private var rewardedPlayers = mutableListOf<UUID>()
 
     private val ejector = LootEjectorBehaviour {
-        sound(Content.VAULT_EJECT_SOUND)
+        sound(Backport.VAULT_EJECT_SOUND)
     }
 
     companion object {
@@ -62,7 +62,7 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
         val level = getLevel()
 
         return if (!hasUnlocked(player) && test(stack)) {
-            sound(Content.VAULT_INSERT_KEY_SOUND)
+            sound(Backport.VAULT_INSERT_KEY_SOUND)
             if (!player.abilities.instabuild) stack.shrink(1)
 
             if (level is ServerLevel) ejector.generate(lootTable!!, level, blockPos, player)
@@ -71,7 +71,7 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.VAULT_TI
 
             InteractionResult.CONSUME
         } else {
-            sound(Content.VAULT_INSERT_KEY_FAIL_SOUND)
+            sound(Backport.VAULT_INSERT_KEY_FAIL_SOUND)
 
             InteractionResult.FAIL
         }

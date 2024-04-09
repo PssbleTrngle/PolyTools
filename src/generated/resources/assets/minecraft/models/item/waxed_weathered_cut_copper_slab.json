@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/weathered_cut_copper_slab",
+  "overrides": [
+    {
+      "model": "minecraft:item/polished_tuff_slab",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    }
+  ]
+}

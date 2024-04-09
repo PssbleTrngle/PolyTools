@@ -1,6 +1,6 @@
 package com.possible_triangle.polytools.block.tile
 
-import com.possible_triangle.polytools.Content
+import com.possible_triangle.polytools.modules.Backport
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.nbt.CompoundTag
@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.TRIAL_SPAWNER_TILE, pos, state) {
+class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Backport.TRIAL_SPAWNER_TILE, pos, state) {
 
     private var spawnDelay = 40
 
@@ -42,7 +42,7 @@ class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.T
     private var mobsSpawned = 0
 
     private val ejector = LootEjectorBehaviour {
-        sound(Content.TRIAL_SPAWNER_EJECT_SOUND)
+        sound(Backport.TRIAL_SPAWNER_EJECT_SOUND)
     }
 
     companion object {
@@ -71,7 +71,7 @@ class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.T
 
             players.forEach {
                 if (registeredPlayers.add(it.uuid)) {
-                    sound(Content.TRIAL_SPAWNER_DETECT_PLAYER_SOUND)
+                    sound(Backport.TRIAL_SPAWNER_DETECT_PLAYER_SOUND)
                 }
             }
 
@@ -158,7 +158,7 @@ class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.T
             mobsSpawned++
             currentMobs.add(entity.uuid)
 
-            sound(Content.TRIAL_SPAWNER_SPAWN_MOB_SOUND)
+            sound(Backport.TRIAL_SPAWNER_SPAWN_MOB_SOUND)
 
             delay()
         }

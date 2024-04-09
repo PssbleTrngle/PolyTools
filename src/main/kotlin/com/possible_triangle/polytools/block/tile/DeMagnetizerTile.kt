@@ -1,7 +1,7 @@
 package com.possible_triangle.polytools.block.tile
 
-import com.possible_triangle.polytools.Content
 import com.possible_triangle.polytools.item.MagnetItem.Companion.IGNORE_TAG
+import com.possible_triangle.polytools.modules.Tools
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.Level
@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 
-class DeMagnetizerTile(pos: BlockPos, state: BlockState) : BlockEntity(Content.DEMAGNETIZER_TILE, pos, state) {
+class DeMagnetizerTile(pos: BlockPos, state: BlockState) : BlockEntity(Tools.DEMAGNETIZER_TILE, pos, state) {
 
     companion object {
 

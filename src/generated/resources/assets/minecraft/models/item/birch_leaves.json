@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:block/birch_leaves",
+  "overrides": [
+    {
+      "model": "minecraft:item/copper_grate",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    },
+    {
+      "model": "minecraft:item/exposed_copper_grate",
+      "predicate": {
+        "custom_model_data": 1289423
+      }
+    },
+    {
+      "model": "minecraft:item/weathered_copper_grate",
+      "predicate": {
+        "custom_model_data": 1289424
+      }
+    },
+    {
+      "model": "minecraft:item/oxidized_copper_grate",
+      "predicate": {
+        "custom_model_data": 1289425
+      }
+    }
+  ]
+}

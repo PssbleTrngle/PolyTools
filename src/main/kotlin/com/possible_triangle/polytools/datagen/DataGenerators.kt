@@ -7,7 +7,7 @@ class DataGenerators : DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(generator: FabricDataGenerator) {
         val pack = generator.createPack()
-        pack.addProvider(::ToolModels)
+        pack.addProvider(::ItemModels)
     }
 
 }

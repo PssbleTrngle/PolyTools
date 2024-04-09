@@ -1,6 +1,6 @@
 package com.possible_triangle.polytools.effect
 
-import com.possible_triangle.polytools.Content
+import com.possible_triangle.polytools.modules.Multiblocks
 import eu.pb4.polymer.core.api.other.PolymerStatusEffect
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffect
@@ -25,7 +25,7 @@ class SkyConduitPower : MobEffect(MobEffectCategory.BENEFICIAL, 0xf7f08d), Polym
 
     override fun removeAttributeModifiers(entity: LivingEntity, attributes: AttributeMap, amplifier: Int) {
         super.removeAttributeModifiers(entity, attributes, amplifier)
-        if (entity is ServerPlayer && entity.abilities.mayfly && !entity.hasEffect(Content.SKY_CONDUIT_POWER)) {
+        if (entity is ServerPlayer && entity.abilities.mayfly && !entity.hasEffect(Multiblocks.SKY_CONDUIT_POWER)) {
             entity.gameMode.gameModeForPlayer.updatePlayerAbilities(entity.abilities)
             entity.onUpdateAbilities()
         }

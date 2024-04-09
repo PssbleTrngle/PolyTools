@@ -1,7 +1,7 @@
 package com.possible_triangle.polytools.block
 
-import com.possible_triangle.polytools.Content
 import com.possible_triangle.polytools.block.tile.VaultTile
+import com.possible_triangle.polytools.modules.Backport
 import eu.pb4.polymer.core.api.block.PolymerBlock
 import eu.pb4.polymer.core.impl.networking.ServerPackets
 import eu.pb4.polymer.networking.api.PolymerServerNetworking
@@ -71,7 +71,7 @@ class Vault : BaseEntityBlock(Properties.copy(Blocks.BEDROCK)), PolymerBlock {
         state: BlockState,
         type: BlockEntityType<T>,
     ): BlockEntityTicker<T>? {
-        if (type != Content.VAULT_TILE) return null
+        if (type != Backport.VAULT_TILE) return null
         if (level.isClientSide) return null
         return BlockEntityTicker(VaultTile::serverTick) as BlockEntityTicker<T>
     }

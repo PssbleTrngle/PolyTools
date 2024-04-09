@@ -13,40 +13,54 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier
 
-abstract class Registrar {
+abstract class Registrar(val namespace: String = PolytoolsMod.ID) {
 
     private val entries = arrayListOf<() -> Unit>()
 
-    fun <T, R : T> String.create(registry: Registry<T>, value: R): R {
+    protected fun <T : Any, R : T> String.create(registry: Registry<T>, value: R): R {
+        entries.add { Registry.register(registry, "$namespace:$this", value) }
+        return value
+    }
+
+    protected fun <T : Any, R : T> overwrite(registry: Registry<T>, from: T, value: R): R {
+        entries.add { Registry.registerMapping(registry, registry.getId(from),  registry.getKey(from)!!.path, value) }
+        return value
+    }
+
+    protected fun <T : Any, R : T> ResourceLocation.create(registry: Registry<T>, value: R): R {
         entries.add { Registry.register(registry, this, value) }
         return value
     }
 
-    fun <T, R : T> ResourceLocation.create(registry: Registry<T>, value: R): R {
+    protected fun <T : Any, R : T> ResourceKey<T>.create(registry: Registry<T>, value: R): R {
         entries.add { Registry.register(registry, this, value) }
         return value
     }
 
-    fun <T : Any, R : T> ResourceKey<T>.create(registry: Registry<T>, value: R): R {
-        entries.add { Registry.register(registry, this, value) }
-        return value
-    }
+    protected infix fun <T : Block> String.createBlock(block: T): T = create(BuiltInRegistries.BLOCK, block)
 
-    infix fun <T : Block> String.createBlock(block: T): T = create(BuiltInRegistries.BLOCK, block)
+    protected infix fun <T : Item> String.createItem(item: T): T = create(BuiltInRegistries.ITEM, item)
 
-    infix fun <T : Item> String.createItem(item: T): T = create(BuiltInRegistries.ITEM, item)
+    protected fun <T : Block> overwriteBlock(from: Block, createBlock: (Block) -> T): T =
+        overwrite(BuiltInRegistries.BLOCK, from, createBlock(from))
 
-    fun <T : BlockEntity> String.createTile(supplier: BlockEntitySupplier<out T> , vararg blocks: Block): BlockEntityType<T> = create(
+    protected fun <T : BlockEntity> String.createTile(
+        supplier: BlockEntitySupplier<out T>,
+        vararg blocks: Block,
+    ): BlockEntityType<T> = create(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
         BlockEntityType.Builder.of(supplier, *blocks).build(null)
     ).also {
         PolymerBlockUtils.registerBlockEntity(it)
     }
 
-    fun String.createSound() = Holder.direct(SoundEvent.createVariableRangeEvent(ResourceLocation(this)))
+    protected fun String.createSound() = Holder.direct(SoundEvent.createVariableRangeEvent(ResourceLocation(this)))
+
+    protected open fun onRegister() {}
 
     fun register() {
         entries.forEach { it() }
+        onRegister()
     }
 
 }

@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/oxidized_cut_copper",
+  "overrides": [
+    {
+      "model": "minecraft:item/oxidized_chiseled_copper",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    }
+  ]
+}

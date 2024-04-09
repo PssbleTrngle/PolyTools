@@ -1,6 +1,9 @@
 package com.possible_triangle.polytools
 
-import eu.pb4.polymer.core.api.block.PolymerBlockUtils
+import com.possible_triangle.polytools.modules.Backport
+import com.possible_triangle.polytools.modules.Multiblocks
+import com.possible_triangle.polytools.modules.Tools
+import eu.pb4.polymer.core.api.block.BlockMapper
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
@@ -10,8 +13,15 @@ object PolytoolsMod : ModInitializer {
     val LOGGER = LoggerFactory.getLogger(ID)!!
 
     override fun onInitialize() {
-        PolymerBlockUtils.registerBlockEntity(Content.DEMAGNETIZER_TILE)
-        Content.register()
+        Tools.register()
+        Multiblocks.register()
+        Backport.register()
+        Forked.register()
+
         Events.register()
+
+        BlockMapper.DEFAULT_MAPPER_EVENT.register { _, base ->
+            ExtendedBlockMapper(base)
+        }
     }
 }

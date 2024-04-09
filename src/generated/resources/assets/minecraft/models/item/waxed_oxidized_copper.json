@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/oxidized_copper",
+  "overrides": [
+    {
+      "model": "minecraft:item/chiseled_tuff_bricks",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 package com.possible_triangle.polytools.block
 
-import com.possible_triangle.polytools.Content
 import com.possible_triangle.polytools.block.tile.DeMagnetizerTile
+import com.possible_triangle.polytools.modules.Tools
 import eu.pb4.polymer.core.api.block.PolymerBlock
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
@@ -28,7 +28,7 @@ class DeMagnetizer : BaseEntityBlock(Properties.copy(Blocks.LODESTONE)), Polymer
         state: BlockState,
         type: BlockEntityType<T>,
     ): BlockEntityTicker<T>? {
-        if (type != Content.DEMAGNETIZER_TILE) return null
+        if (type != Tools.DEMAGNETIZER_TILE) return null
         if (level.isClientSide) return null
         return BlockEntityTicker(DeMagnetizerTile::serverTick) as BlockEntityTicker<T>
     }

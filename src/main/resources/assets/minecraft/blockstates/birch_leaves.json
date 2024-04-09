@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "distance=1": {
+      "model": "minecraft:block/birch_leaves"
+    },
+    "distance=2": {
+      "model": "minecraft:block/copper_grate"
+    },
+    "distance=3": {
+      "model": "minecraft:block/exposed_copper_grate"
+    },
+    "distance=4": {
+      "model": "minecraft:block/weathered_copper_grate"
+    },
+    "distance=5": {
+      "model": "minecraft:block/oxidized_copper_grate"
+    }
+  }
+}

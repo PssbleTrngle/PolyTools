@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/weathered_copper",
+  "overrides": [
+    {
+      "model": "minecraft:item/polished_tuff",
+      "predicate": {
+        "custom_model_data": 1289422
+      }
+    }
+  ]
+}
