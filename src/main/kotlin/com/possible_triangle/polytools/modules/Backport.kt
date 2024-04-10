@@ -38,6 +38,8 @@ object Backport : Registrar("minecraft") {
     val VAULT_EJECT_SOUND = "block.vault.eject_item".createSound()
     val VAULT_INSERT_KEY_SOUND = "block.vault.insert_item".createSound()
     val VAULT_INSERT_KEY_FAIL_SOUND = "block.vault.insert_item_fail".createSound()
+    val VAULT_ACTIVATE = "block.vault.activate".createSound()
+    val VAULT_DEACTIVATE = "block.vault.deactivate".createSound()
 
     val copperSet = BlockSetType(
         "copper",

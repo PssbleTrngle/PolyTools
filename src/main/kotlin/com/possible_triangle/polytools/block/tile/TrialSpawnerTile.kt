@@ -46,10 +46,10 @@ class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Backport.
     }
 
     companion object {
-        private val SPAWN_DELAY = 50
-        private val SLEEP_DELAY = 36000
-        private val PLAYER_RANGE = 14
-        private val SPAWN_RANGE = 4.0
+        private const val SPAWN_DELAY = 50
+        private const val SLEEP_DELAY = 36000
+        private const val PLAYER_RANGE_SQR = 14 * 14
+        private const val SPAWN_RANGE = 4.0
 
         fun serverTick(level: Level, pos: BlockPos, state: BlockState, tile: TrialSpawnerTile) = with(tile) {
             if (level !is ServerLevel) return
@@ -64,7 +64,7 @@ class TrialSpawnerTile(pos: BlockPos, state: BlockState) : BlockEntity(Backport.
             if (level.getCurrentDifficultyAt(pos).difficulty == Difficulty.PEACEFUL) return
 
             val players = level.players().filter {
-                !it.isSpectator && it.distanceToSqr(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) <= PLAYER_RANGE
+                !it.isSpectator && it.distanceToSqr(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) <= PLAYER_RANGE_SQR
             }
 
             if (players.isEmpty()) return

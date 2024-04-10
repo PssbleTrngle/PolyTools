@@ -16,7 +16,6 @@ object PolytoolsMod : ModInitializer {
         Tools.register()
         Multiblocks.register()
         Backport.register()
-        Forked.register()
 
         Events.register()
 

@@ -1,5 +1,6 @@
 package com.possible_triangle.polytools.block.tile
 
+import com.possible_triangle.polytools.block.Vault
 import com.possible_triangle.polytools.modules.Backport
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
@@ -16,6 +17,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.gameevent.GameEvent
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -33,9 +35,32 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Backport.VAULT_T
     }
 
     companion object {
+        private const val PLAYER_RANGE_SQR = 4 * 4
+
         fun serverTick(level: Level, pos: BlockPos, state: BlockState, tile: VaultTile) = with(tile) {
             if (level !is ServerLevel) return
             ejector.tick(level, pos)
+
+            val players = level.players().filter {
+                !it.isSpectator && it.distanceToSqr(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) <= PLAYER_RANGE_SQR
+            }
+
+            val currentState = state.getValue(Vault.STATE)
+            val nextState = if (players.any { !hasUnlocked(it) }) Vault.State.ACTIVE else Vault.State.INACTIVE
+
+            if (currentState != nextState) {
+                state.setValue(Vault.STATE, nextState).also {
+                    level.setBlockAndUpdate(pos, it)
+                    level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(it))
+                }
+
+                sound(
+                    when (nextState) {
+                        Vault.State.INACTIVE -> Backport.VAULT_DEACTIVATE
+                        Vault.State.ACTIVE -> Backport.VAULT_ACTIVATE
+                    }
+                )
+            }
         }
     }
 
@@ -54,7 +79,7 @@ class VaultTile(pos: BlockPos, state: BlockState) : BlockEntity(Backport.VAULT_T
     }
 
     fun hasUnlocked(player: Player): Boolean {
-       return rewardedPlayers.contains(player.uuid)
+        return rewardedPlayers.contains(player.uuid)
     }
 
     fun unlock(player: Player, stack: ItemStack): InteractionResult {
