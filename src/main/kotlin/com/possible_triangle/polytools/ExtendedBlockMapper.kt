@@ -20,8 +20,9 @@ class ExtendedBlockMapper(private val base: BlockMapper) : BlockMapper {
         if (state.block is TrapDoorBlock) return state.setValue(TrapDoorBlock.POWERED, false)
         if (state.block is LeavesBlock) return state.setValue(LeavesBlock.DISTANCE, 1)
 
-        if(state.`is`(Blocks.MYCELIUM)) return SNOWY_GRASS
-        if(state.`is`(Blocks.PODZOL)) return SNOWY_GRASS
+        if (state.`is`(Blocks.MYCELIUM) || state.`is`(Blocks.PODZOL)) {
+            if (state.getValue(SnowyDirtBlock.SNOWY)) return SNOWY_GRASS
+        }
 
         val unwaxed = HoneycombItem.WAX_OFF_BY_BLOCK.get()[state.block]
         if (unwaxed != null) return unwaxed.withPropertiesOf(state)
