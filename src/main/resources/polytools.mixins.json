@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.possible_triangle.polytools.mixins",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["AgeableMobMixin", "VineBlockMixin"],
+  "mixins": ["AgeableMobMixin", "ItemFrameMixin", "VineBlockMixin"],
   "injectors": {
     "defaultRequire": 1
   }

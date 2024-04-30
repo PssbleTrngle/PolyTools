@@ -62,16 +62,11 @@ class CutVinesBlock : VineBlock(Properties.copy(Blocks.VINE)), PolymerBlock {
 
             level.playSound(player, hit.blockPos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0f, 1.0f)
 
+            level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
+
             val cutState = CUT_VINES.withPropertiesOf(state)
             level.setBlockAndUpdate(hit.blockPos, cutState)
             level.gameEvent(GameEvent.BLOCK_CHANGE, hit.blockPos, GameEvent.Context.of(player, cutState))
-
-            val below = hit.blockPos.below()
-            if (checkBlock(level.getBlockState(below))) {
-                val air = Blocks.AIR.defaultBlockState()
-                level.setBlockAndUpdate(below, air)
-                level.gameEvent(GameEvent.BLOCK_CHANGE, below, GameEvent.Context.of(player, air))
-            }
 
             stack.hurtAndBreak(1, player) {
                 it.broadcastBreakEvent(hand)

@@ -1,6 +1,8 @@
 package com.possible_triangle.polytools.item
 
+import com.possible_triangle.polytools.modules.Tools
 import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
@@ -11,9 +13,12 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.tags.PaintingVariantTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.decoration.Painting
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -29,6 +34,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties.FAC
 import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.level.block.state.properties.SlabType
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 
 
@@ -46,6 +52,36 @@ class WrenchItem : ModelledPolymerItem(Properties(), Items.STICK, 0) {
         private const val LOCK_KEY = "locked_property"
         val PROPERTIES = listOf(AXIS, SlabBlock.TYPE, FACING, HorizontalDirectionalBlock.FACING)
         val FORBIDDEN = listOf<Comparable<*>>(SlabType.DOUBLE)
+
+        fun useOnEntity(
+            player: Player,
+            level: Level,
+            hand: InteractionHand,
+            entity: Entity,
+            hit: EntityHitResult?,
+        ): InteractionResult {
+            val stack = player.getItemInHand(hand)
+            if(!stack.`is`(Tools.WRENCH)) return InteractionResult.PASS
+
+            return if (entity is Painting) {
+
+                val variants = BuiltInRegistries.PAINTING_VARIANT.getTagOrEmpty(PaintingVariantTags.PLACEABLE)
+                    .filter { it.value().height == entity.variant.value().height }
+                    .filter { it.value().width == entity.variant.value().width }
+
+                if (variants.size < 2) return InteractionResult.FAIL
+
+                val currentIndex = variants.indexOf(entity.variant)
+                val i = if(player.isCrouching) -1 else 1
+                entity.variant = variants[(currentIndex + i + variants.size) % variants.size]
+
+                level.playSound(player, entity.pos, SoundEvents.BRUSH_GENERIC, SoundSource.BLOCKS, 1F, 1F)
+
+                InteractionResult.SUCCESS
+            } else {
+                InteractionResult.PASS
+            }
+        }
     }
 
     override fun getPolymerItemStack(stack: ItemStack, context: TooltipFlag?, player: ServerPlayer?): ItemStack {
@@ -58,11 +94,12 @@ class WrenchItem : ModelledPolymerItem(Properties(), Items.STICK, 0) {
 
     override fun modifyClientTooltip(tooltip: MutableList<Component>, stack: ItemStack, player: ServerPlayer?) {
         val lock = stack.getLock()
-        if(lock != null) {
-            tooltip.add(Component.literal("Locked ")
-                .append(Component.literal(lock.key).setStyle(Style.EMPTY.withItalic(true)))
-                .append(Component.literal(" to "))
-                .append(Component.literal(lock.value.asString).setStyle(Style.EMPTY.withItalic(true)))
+        if (lock != null) {
+            tooltip.add(
+                Component.literal("Locked ")
+                    .append(Component.literal(lock.key).setStyle(Style.EMPTY.withItalic(true)))
+                    .append(Component.literal(" to "))
+                    .append(Component.literal(lock.value.asString).setStyle(Style.EMPTY.withItalic(true)))
             )
         }
     }
@@ -106,6 +143,7 @@ class WrenchItem : ModelledPolymerItem(Properties(), Items.STICK, 0) {
         })
     }
 
+
     override fun use(level: Level, user: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack = user.getItemInHand(hand)
 
@@ -117,6 +155,7 @@ class WrenchItem : ModelledPolymerItem(Properties(), Items.STICK, 0) {
                 val result = rotateBlock(level as ServerLevel, pos, user, stack)
                 InteractionResultHolder(result, stack)
             }
+
             HitResult.Type.MISS -> {
                 if (stack.getLock() != null && user.isShiftKeyDown) {
                     stack.removeTagKey(LOCK_KEY)
@@ -126,6 +165,7 @@ class WrenchItem : ModelledPolymerItem(Properties(), Items.STICK, 0) {
                     InteractionResultHolder.pass(stack)
                 }
             }
+
             else -> {
                 user.sendSystemMessage(Component.literal(hit.type.name))
                 super.use(level, user, hand)
