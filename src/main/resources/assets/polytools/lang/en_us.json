@@ -8,5 +8,6 @@
   "block.polytools.sky_conduit": "Chime",
   "block.minecraft.trial_spawner": "Trial Spawner",
   "block.minecraft.vault": "Vault",
-  "itemGroup.polytools.polytools": "Poly-Tools"
+  "itemGroup.polytools.polytools": "Poly-Tools",
+  "gamerule.anvilFallDamage": "Anvils break from falling too high"
 }
