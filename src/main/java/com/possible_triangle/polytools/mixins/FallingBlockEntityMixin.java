@@ -1,5 +1,6 @@
 package com.possible_triangle.polytools.mixins;
 
+import com.possible_triangle.polytools.GameRules;
 import com.possible_triangle.polytools.PolytoolsMod;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.block.AnvilBlock;
@@ -17,7 +18,7 @@ public class FallingBlockEntityMixin {
     )
     private BlockState shouldAnvilDamage(BlockState blockState) {
         var self = (FallingBlockEntity) (Object) this;
-        if(self.level().getGameRules().getBoolean(PolytoolsMod.INSTANCE.getANVIL_FALL_DAMAGE_RULE())) {
+        if(self.level().getGameRules().getBoolean(GameRules.INSTANCE.getANVIL_FALL_DAMAGE_RULE())) {
             return AnvilBlock.damage(blockState);
         } else {
             return blockState;
