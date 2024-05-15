@@ -13,6 +13,8 @@ object PolytoolsMod : ModInitializer {
     val LOGGER = LoggerFactory.getLogger(ID)!!
 
     override fun onInitialize() {
+        GameRules.register()
+
         Tools.register()
         Multiblocks.register()
         Backport.register()

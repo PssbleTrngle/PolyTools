@@ -9,5 +9,6 @@
   "block.minecraft.trial_spawner": "Trial Spawner",
   "block.minecraft.vault": "Vault",
   "itemGroup.polytools.polytools": "Poly-Tools",
-  "gamerule.anvilFallDamage": "Anvils break from falling too high"
+  "gamerule.anvilFallDamage": "Anvils break from falling too high",
+  "gamerule.lockedPaintingsVariants": "Painting retain their variant when broken"
 }

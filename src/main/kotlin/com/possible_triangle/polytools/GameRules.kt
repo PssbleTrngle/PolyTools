@@ -8,6 +8,10 @@ object GameRules {
 
     val ANVIL_FALL_DAMAGE_RULE = GameRuleRegistry.register("anvilFallDamage", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true))
 
-    val LOCKED_PAINTINGS_VARIANTS = GameRuleRegistry.register("lockedPaintingsVariants", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true))
+    val LOCKED_PAINTINGS_VARIANTS = GameRuleRegistry.register("lockedPaintingsVariants", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false))
+
+    fun register() {
+        // Loads this class
+    }
 
 }
