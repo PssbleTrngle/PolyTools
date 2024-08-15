@@ -36,5 +36,5 @@ enablePublishing {
 
 uploadToCurseforge()
 uploadToModrinth {
-
+    syncBodyFromReadme()
 }
