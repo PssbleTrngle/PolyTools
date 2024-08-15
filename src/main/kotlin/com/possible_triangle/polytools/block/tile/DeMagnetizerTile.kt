@@ -3,6 +3,7 @@ package com.possible_triangle.polytools.block.tile
 import com.possible_triangle.polytools.item.MagnetItem.Companion.IGNORE_TAG
 import com.possible_triangle.polytools.modules.Tools
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.Level
@@ -36,13 +37,13 @@ class DeMagnetizerTile(pos: BlockPos, state: BlockState) : BlockEntity(Tools.DEM
     private var customRange: Double? = null
     val range get() = customRange ?: DEFAULT_RANGE
 
-    override fun saveAdditional(nbt: CompoundTag) {
-        super.saveAdditional(nbt)
+    override fun saveAdditional(nbt: CompoundTag, lookup: HolderLookup.Provider) {
+        super.saveAdditional(nbt, lookup)
         customRange?.let { nbt.putDouble("custom_range", it) }
     }
 
-    override fun load(nbt: CompoundTag) {
-        super.load(nbt)
+    override fun loadAdditional(nbt: CompoundTag, lookup: HolderLookup.Provider) {
+        super.loadAdditional(nbt, lookup)
         customRange = nbt.getDouble("custom_range").takeIf { it > 0 }
     }
 

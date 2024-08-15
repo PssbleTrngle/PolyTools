@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
@@ -20,11 +21,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.phys.BlockHitResult
 
-class CutVinesBlock : VineBlock(Properties.copy(Blocks.VINE)), PolymerBlock {
+class CutVinesBlock : VineBlock(Properties.ofFullCopy(Blocks.VINE)), PolymerBlock {
 
-    override fun getPolymerBlock(state: BlockState) = Blocks.VINE
-
-    override fun getPolymerBlockState(state: BlockState) = getPolymerBlock(state).withPropertiesOf(state)
+    override fun getPolymerBlockState(state: BlockState) = Blocks.VINE.withPropertiesOf(state)
 
     override fun isRandomlyTicking(blockState: BlockState) = false
 
@@ -68,9 +67,7 @@ class CutVinesBlock : VineBlock(Properties.copy(Blocks.VINE)), PolymerBlock {
             level.setBlockAndUpdate(hit.blockPos, cutState)
             level.gameEvent(GameEvent.BLOCK_CHANGE, hit.blockPos, GameEvent.Context.of(player, cutState))
 
-            stack.hurtAndBreak(1, player) {
-                it.broadcastBreakEvent(hand)
-            }
+            stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand))
 
             return InteractionResult.SUCCESS
         }

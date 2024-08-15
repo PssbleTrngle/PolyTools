@@ -6,7 +6,6 @@ import com.possible_triangle.polytools.item.WrenchItem
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
-import net.minecraft.server.commands.ResetChunksCommand
 
 object Events {
 
@@ -19,7 +18,6 @@ object Events {
 
         CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
             RespawnCommand.register(dispatcher)
-            ResetChunksCommand.register(dispatcher)
         }
     }
 

@@ -3,6 +3,8 @@ package com.possible_triangle.polytools.item
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -18,9 +20,7 @@ class SpawnPorter : ModelledPolymerItem(Properties().rarity(Rarity.EPIC).durabil
     ): InteractionResultHolder<ItemStack> {
         val stack = player.getItemInHand(hand)
 
-        stack.hurtAndBreak(1, player) {
-            it.broadcastBreakEvent(hand)
-        }
+        stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand))
 
         if (player is ServerPlayer) respawn(player)
 
@@ -29,7 +29,7 @@ class SpawnPorter : ModelledPolymerItem(Properties().rarity(Rarity.EPIC).durabil
 
     companion object {
         fun respawn(player: ServerPlayer) {
-            player.connection.player = player.server.playerList.respawn(player, true)
+            player.connection.player = player.server.playerList.respawn(player, true, Entity.RemovalReason.CHANGED_DIMENSION)
         }
     }
 

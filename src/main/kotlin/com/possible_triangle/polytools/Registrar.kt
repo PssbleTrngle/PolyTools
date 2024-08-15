@@ -6,7 +6,6 @@ import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -17,13 +16,16 @@ abstract class Registrar(val namespace: String = PolytoolsMod.ID) {
 
     private val entries = arrayListOf<() -> Unit>()
 
-    protected fun <T : Any, R : T> String.create(registry: Registry<T>, value: R): R {
-        entries.add { Registry.register(registry, "$namespace:$this", value) }
-        return value
+    protected fun <T : Any, R : T> String.createHolder(registry: Registry<T>, value: R): Holder<T> {
+        return ResourceLocation.fromNamespaceAndPath(namespace, this).createHolder(registry, value)
     }
 
-    protected fun <T : Any, R : T> overwrite(registry: Registry<T>, from: T, value: R): R {
-        entries.add { Registry.registerMapping(registry, registry.getId(from),  registry.getKey(from)!!.path, value) }
+    protected fun <T : Any, R : T> ResourceLocation.createHolder(registry: Registry<T>, value: R): Holder<T> {
+        return Registry.registerForHolder(registry, this, value)
+    }
+
+    protected fun <T : Any, R : T> String.create(registry: Registry<T>, value: R): R {
+        entries.add { Registry.register(registry, "$namespace:$this", value) }
         return value
     }
 
@@ -41,9 +43,6 @@ abstract class Registrar(val namespace: String = PolytoolsMod.ID) {
 
     protected infix fun <T : Item> String.createItem(item: T): T = create(BuiltInRegistries.ITEM, item)
 
-    protected fun <T : Block> overwriteBlock(from: Block, createBlock: (Block) -> T): T =
-        overwrite(BuiltInRegistries.BLOCK, from, createBlock(from))
-
     protected fun <T : BlockEntity> String.createTile(
         supplier: BlockEntitySupplier<out T>,
         vararg blocks: Block,
@@ -53,8 +52,6 @@ abstract class Registrar(val namespace: String = PolytoolsMod.ID) {
     ).also {
         PolymerBlockUtils.registerBlockEntity(it)
     }
-
-    protected fun String.createSound() = Holder.direct(SoundEvent.createVariableRangeEvent(ResourceLocation(this)))
 
     protected open fun onRegister() {}
 

@@ -1,6 +1,7 @@
 package com.possible_triangle.polytools
 
 import com.possible_triangle.polytools.extensions.PreventableAgeEntity
+import net.minecraft.core.particles.ColorParticleOption
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.InteractionHand
@@ -29,7 +30,8 @@ object PoisonousPotato {
         if (entity.`polytools$isAgingPrevented`()) return InteractionResult.FAIL
 
         entity.playSound(SoundEvents.GENERIC_EAT, 0.5F, 0.25F)
-        level.addParticle(ParticleTypes.ENTITY_EFFECT, entity.x, entity.y, entity.z, 0.2, 0.8, 0.0)
+        val particle = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, -1)
+        level.addParticle(particle, entity.x, entity.y, entity.z, 0.2, 0.8, 0.0)
 
         if (!player.abilities.instabuild) {
             stack.shrink(1)

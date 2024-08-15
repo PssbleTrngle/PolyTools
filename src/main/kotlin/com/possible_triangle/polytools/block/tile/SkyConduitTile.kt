@@ -2,6 +2,7 @@ package com.possible_triangle.polytools.block.tile
 
 import com.possible_triangle.polytools.modules.Multiblocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -85,13 +86,13 @@ class SkyConduitTile(pos: BlockPos, state: BlockState) : TickingTile(Multiblocks
         }
     }
 
-    override fun saveAdditional(nbt: CompoundTag) {
-        super.saveAdditional(nbt)
+    override fun saveAdditional(nbt: CompoundTag, provider: HolderLookup.Provider) {
+        super.saveAdditional(nbt, provider)
         customRangeFactor?.let { nbt.putDouble("custom_range_factor", it) }
     }
 
-    override fun load(nbt: CompoundTag) {
-        super.load(nbt)
+    override fun loadAdditional(nbt: CompoundTag, provider: HolderLookup.Provider) {
+        super.loadAdditional(nbt, provider)
         customRangeFactor = nbt.getDouble("custom_range_factor").takeIf { it > 0 }
     }
 

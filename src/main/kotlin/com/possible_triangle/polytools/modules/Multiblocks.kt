@@ -1,5 +1,6 @@
 package com.possible_triangle.polytools.modules
 
+import com.possible_triangle.polytools.PolytoolsMod
 import com.possible_triangle.polytools.Registrar
 import com.possible_triangle.polytools.block.SkyConduit
 import com.possible_triangle.polytools.block.tile.SkyConduitTile
@@ -21,7 +22,7 @@ object Multiblocks : Registrar() {
     val SKY_CONDUIT = "sky_conduit" createBlock SkyConduit()
     val SKY_CONDUIT_ITEM = "sky_conduit"  createItem PolymerBlockItem(SKY_CONDUIT, Item.Properties().rarity(Rarity.RARE), Items.CONDUIT)
     val SKY_CONDUIT_TILE = "sky_conduit".createTile(::SkyConduitTile, SKY_CONDUIT)
-    val SKY_CONDUIT_BASE_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation("sky_conduit_base_blocks"))
-    val SKY_CONDUIT_POWER  = "sky_conduit_power".create(BuiltInRegistries.MOB_EFFECT, SkyConduitPower())
+    val SKY_CONDUIT_BASE_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(PolytoolsMod.ID, "sky_conduit_base_blocks"))
+    val SKY_CONDUIT_POWER  = "sky_conduit_power".createHolder(BuiltInRegistries.MOB_EFFECT, SkyConduitPower())
 
 }

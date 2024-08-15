@@ -5,7 +5,7 @@ val sgui_version: String by extra
 val polymer_version: String by extra
 
 plugins {
-    id("com.possible-triangle.gradle") version ("0.1.5")
+    id("com.possible-triangle.gradle") version ("0.2.1")
 }
 
 withKotlin()

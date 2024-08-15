@@ -30,8 +30,4 @@ class ExtendedBlockMapper(private val base: BlockMapper) : BlockMapper {
         return state
     }
 
-    override fun toClientSideBlock(block: Block, player: ServerPlayer?): Block {
-        return base.toClientSideBlock(block, player)
-    }
-
 }

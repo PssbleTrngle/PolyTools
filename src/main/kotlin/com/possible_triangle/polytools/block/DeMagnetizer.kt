@@ -1,5 +1,6 @@
 package com.possible_triangle.polytools.block
 
+import com.mojang.serialization.MapCodec
 import com.possible_triangle.polytools.block.tile.DeMagnetizerTile
 import com.possible_triangle.polytools.modules.Tools
 import eu.pb4.polymer.core.api.block.PolymerBlock
@@ -16,19 +17,23 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.ENABLED
 
-class DeMagnetizer : BaseEntityBlock(Properties.copy(Blocks.LODESTONE)), PolymerBlock {
+class DeMagnetizer : BaseEntityBlock(Properties.ofFullCopy(Blocks.LODESTONE)), PolymerBlock {
+
+    companion object {
+        private val CODEC: MapCodec<DeMagnetizer> = simpleCodec { DeMagnetizer() }
+    }
 
     init {
         registerDefaultState(stateDefinition.any().setValue(ENABLED, true))
     }
 
+    override fun codec() = CODEC
+
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return DeMagnetizerTile(pos, state)
     }
 
-    override fun getPolymerBlock(state: BlockState): Block {
-        return Blocks.LODESTONE
-    }
+    override fun getPolymerBlockState(state: BlockState?) = Blocks.LODESTONE.defaultBlockState()
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
@@ -50,7 +55,7 @@ class DeMagnetizer : BaseEntityBlock(Properties.copy(Blocks.LODESTONE)), Polymer
         level: Level,
         blockPos: BlockPos,
         blockState2: BlockState,
-        bl: Boolean
+        bl: Boolean,
     ) {
         if (!blockState2.`is`(blockState.block)) {
             this.checkPoweredState(level, blockPos, blockState, 2)

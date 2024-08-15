@@ -7,24 +7,22 @@ import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.ai.attributes.AttributeMap
 
-class SkyConduitPower : MobEffect(MobEffectCategory.BENEFICIAL, 0xf7f08d), PolymerStatusEffect {
+class SkyConduitPower : MobEffect(MobEffectCategory.BENEFICIAL, 0xf7f08d), PolymerStatusEffect, RemovedableEffect {
 
     override fun getPolymerReplacement(player: ServerPlayer?): MobEffect {
-        return MobEffects.CONDUIT_POWER
+        return MobEffects.CONDUIT_POWER.value()
     }
 
-    override fun addAttributeModifiers(entity: LivingEntity, attributes: AttributeMap, amplifier: Int) {
-        super.addAttributeModifiers(entity, attributes, amplifier)
+    override fun onEffectAdded(entity: LivingEntity, i: Int) {
+        super.onEffectAdded(entity, i)
         if (entity is ServerPlayer && !entity.abilities.mayfly) {
             entity.abilities.mayfly = true
             entity.onUpdateAbilities()
         }
     }
 
-    override fun removeAttributeModifiers(entity: LivingEntity, attributes: AttributeMap, amplifier: Int) {
-        super.removeAttributeModifiers(entity, attributes, amplifier)
+    override fun onEffectRemoved(entity: LivingEntity) {
         if (entity is ServerPlayer && entity.abilities.mayfly && !entity.hasEffect(Multiblocks.SKY_CONDUIT_POWER)) {
             entity.gameMode.gameModeForPlayer.updatePlayerAbilities(entity.abilities)
             entity.onUpdateAbilities()

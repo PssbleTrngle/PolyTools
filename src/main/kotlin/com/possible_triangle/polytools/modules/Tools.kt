@@ -8,7 +8,10 @@ import com.possible_triangle.polytools.block.tile.DeMagnetizerTile
 import com.possible_triangle.polytools.item.MagnetItem
 import com.possible_triangle.polytools.item.SpawnPorter
 import com.possible_triangle.polytools.item.WrenchItem
+import com.possible_triangle.polytools.item.WrenchItem.Lock
 import eu.pb4.polymer.core.api.item.PolymerBlockItem
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
@@ -30,7 +33,22 @@ object Tools : Registrar() {
 
     val SPAWN_PORTER = "spawn_porter" createItem SpawnPorter()
 
-    val FAKE_GATEWAY = "fake_gateway" createBlock PolymerPortalBlock(BlockBehaviour.Properties.copy(Blocks.END_GATEWAY), Blocks.END_GATEWAY, BlockEntityType.END_GATEWAY)
-    val FAKE_PORTAL = "fake_portal" createBlock PolymerPortalBlock(BlockBehaviour.Properties.copy(Blocks.END_PORTAL), Blocks.END_PORTAL, BlockEntityType.END_PORTAL)
+    val FAKE_GATEWAY = "fake_gateway" createBlock PolymerPortalBlock(
+        BlockBehaviour.Properties.ofFullCopy(Blocks.END_GATEWAY),
+        Blocks.END_GATEWAY,
+        BlockEntityType.END_GATEWAY
+    )
+    val FAKE_PORTAL = "fake_portal" createBlock PolymerPortalBlock(
+        BlockBehaviour.Properties.ofFullCopy(Blocks.END_PORTAL),
+        Blocks.END_PORTAL,
+        BlockEntityType.END_PORTAL
+    )
+
+    val LOCK_COMPONENT = "wrench_lock".create(
+        BuiltInRegistries.DATA_COMPONENT_TYPE, DataComponentType.builder<Lock>()
+            .persistent(Lock.CODEC)
+            .cacheEncoding()
+            .build()
+    )
 
 }
