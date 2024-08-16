@@ -24,7 +24,7 @@ class SkyConduit : ConduitBlock(Properties.ofFullCopy(Blocks.CONDUIT)), PolymerH
 
     override fun codec() = CODEC
 
-    override fun getPolymerBlockState(state: BlockState?) = Blocks.CONDUIT.defaultBlockState()
+    override fun getPolymerBlockState(state: BlockState?) = Blocks.CONDUIT.defaultBlockState().setValue(WATERLOGGED, false)
 
     override fun getPolymerSkinValue(state: BlockState, pos: BlockPos, player: ServerPlayer?): String {
         return "ewogICJ0aW1lc3RhbXAiIDogMTY1MTQzNDY3OTY4OCwKICAicHJvZmlsZUlkIiA6ICJhOGJhMGY1YTFmNjQ0MTgzODZkZGI3OWExZmY5ZWRlYyIsCiAgInByb2ZpbGVOYW1lIiA6ICJDcmVlcGVyOTA3NSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9jYTgxODQwM2Y4OWFlNGE0NjhjODNiNDJiNDBmODk4NzZmNzNiMGFlMGM2ZmQ3YjczNTYwMTBmZDY2YTU2ZjUxIiwKICAgICAgIm1ldGFkYXRhIiA6IHsKICAgICAgICAibW9kZWwiIDogInNsaW0iCiAgICAgIH0KICAgIH0KICB9Cn0="
