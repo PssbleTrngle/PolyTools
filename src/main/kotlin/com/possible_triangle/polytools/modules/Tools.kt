@@ -10,6 +10,7 @@ import com.possible_triangle.polytools.item.SpawnPorter
 import com.possible_triangle.polytools.item.WrenchItem
 import com.possible_triangle.polytools.item.WrenchItem.Lock
 import eu.pb4.polymer.core.api.item.PolymerBlockItem
+import eu.pb4.polymer.rsm.api.RegistrySyncUtils
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
@@ -50,5 +51,9 @@ object Tools : Registrar() {
             .cacheEncoding()
             .build()
     )
+
+    init {
+        RegistrySyncUtils.setServerEntry(BuiltInRegistries.DATA_COMPONENT_TYPE, LOCK_COMPONENT)
+    }
 
 }

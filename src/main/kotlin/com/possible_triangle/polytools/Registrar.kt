@@ -3,6 +3,7 @@ package com.possible_triangle.polytools
 import eu.pb4.polymer.core.api.block.PolymerBlockUtils
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
